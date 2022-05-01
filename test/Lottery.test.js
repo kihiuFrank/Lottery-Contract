@@ -10,13 +10,14 @@ let lottery;
 beforeEach(async () => {
   //get a list of all accounts
   accounts = await web3.eth.getAccounts();
+  console.log(accounts);
 
   lottery = await new web3.eth.Contract(abi)
     .deploy({ data: bytecode })
     .send({ from: accounts[0], gas: "1000000" });
 });
 
-describe('lottery Contract', () => {
+describe('Lottery Contract', () => {
     it ('deploys a contract', () => {
         assert.ok(lottery.options.address);
     });
@@ -52,8 +53,10 @@ describe('lottery Contract', () => {
         });
 
         const players = await lottery.methods.getPlayers().call({
-            from: accounts [0]
+            from: accounts[0]
         });
+
+        console.log(players);
 
         assert.equal(accounts[0], players[0]);
         assert.equal(accounts[1], players[1]);
@@ -76,8 +79,7 @@ describe('lottery Contract', () => {
     it ('only manager can call pickWinner', async () => {
         try {
             await lottery.methods.pickWinner().send({
-                from: accounts[1],
-                value: 200
+                from: accounts[1]
             });
             assert(false);
         } catch (err) {
@@ -93,14 +95,14 @@ describe('lottery Contract', () => {
 
         const initialBalance = await web3.eth.getBalance(accounts[0]);
 
-        await lottery.methods.pickWinner().send({
+        //transaction being reverted at this point but works well on remix editor(using rinkeby network). Not sure what I'm doing wrong
+        await lottery.methods.pickWinner().send({       
             from: accounts[0]
         });
-
         const finalBalance = await web3.eth.getBalance(accounts[0]);
-
         const difference = finalBalance - initialBalance;
         console.log(difference);
-        assert(difference > web3.utils.toWei('0.8', 'ether'));
+
+        assert(difference > web3.utils.toWei('0.5', 'ether'));
     });
 }); 

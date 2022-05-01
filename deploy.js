@@ -3,8 +3,8 @@ const Web3 = require('web3');
 const { abi, bytecode } = require("./compile");
 
 const provider = new HDWalletProvider(
-    'place whip accuse laptop damp barrel eight glue search eternal virtual notice',
-    'https://rinkeby.infura.io/v3/267b653f3c5547ec9d9801ea0c7da76f'
+    'dove camera design dial main almost truth doctor situate volume finger paper',
+    'https://rinkeby.infura.io/v3/2eebb17e500d4c9e8ae554aa7d79010a'
 );
 
 const web3 = new Web3 (provider);
@@ -18,6 +18,7 @@ const deploy = async () => {
     .deploy({ data: bytecode })
     .send({ from: accounts[0], gas: '10000000', gasPrice: '2000000000'});
 
+    console.log(abi);
     console.log('Contract deployed to;', result.options.address);
 };
 deploy();
