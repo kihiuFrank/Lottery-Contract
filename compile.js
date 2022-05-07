@@ -11,7 +11,7 @@ let input = {
     [lotteryPath]: {
       content: source,
     },
-  },
+  },  
 
   settings: {
     outputSelection: {
