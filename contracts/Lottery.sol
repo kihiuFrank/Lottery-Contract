@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: ISC
 pragma solidity ^0.8.13;
 
 contract Lottery {
@@ -6,6 +6,7 @@ contract Lottery {
     address payable[] public players;
 
     constructor(){
+        // The manager will be the person deploying the contract
         manager = msg.sender;
     }
 
