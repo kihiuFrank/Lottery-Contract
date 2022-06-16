@@ -5,6 +5,11 @@ contract Lottery {
     address public manager;
     address payable[] public players;
 
+    modifier restricted() {
+        require(msg.sender == manager);
+        _;
+    }
+
     constructor(){
         // The manager will be the person deploying the contract
         manager = msg.sender;
@@ -23,11 +28,6 @@ contract Lottery {
         uint index = random() % players.length;
         players[index].transfer(address(this).balance);  
         players = new address payable[](0);
-    }
-
-    modifier restricted() {
-        require(msg.sender == manager);
-        _;
     }
 
     function getPlayers() public view returns (address payable[] memory) {
